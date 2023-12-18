@@ -21,6 +21,12 @@ const NewWarehouse = ({ warehouses, onWarehouseCreated }) => {
   useEffect(() => {
     navigator.geolocation.getCurrentPosition(function (position) {
       setNewWarehouse({...newWarehouse, lat: position.coords.latitude, long: position.coords.longitude});
+    },(error) => {
+      console.log(error);
+    },{
+      enableHighAccuracy: true,
+      maximumAge: 10000,
+      timeout: 5000,
     });
   }, [isNewWarehouseModalOpen])
 
@@ -209,7 +215,7 @@ const NewWarehouse = ({ warehouses, onWarehouseCreated }) => {
 
               <div className="flex justify-end">
                 <button
-                  className={`px-4 py-1 bg-sky-600 text-white rounded-lg mr-2 shadow-md ${
+                  className={`px-4 py-1 bg-sky-400 text-white rounded-lg mr-2 shadow-md ${
                     isButtonClicked
                       ? "hover:bg-sky-500 hover:scale-95"
                       : "hover:scale-95"
@@ -231,7 +237,7 @@ const NewWarehouse = ({ warehouses, onWarehouseCreated }) => {
       )}
 
       <button
-        className={`lg:mr-16 px-2 py-1 bg-sky-700 text-white rounded-lg shadow-md ${
+        className={`lg:mr-16 px-2 py-1 bg-sky-400 text-white rounded-lg shadow-md ${
           isButtonClicked
             ? "hover:bg-sky-400"
             : "hover:scale-[95%] hover:bg-sky-500"

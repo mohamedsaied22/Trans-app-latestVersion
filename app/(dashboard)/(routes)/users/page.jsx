@@ -13,9 +13,9 @@ import Pagination from "@/components/pagination";
 import SortOptions from "./components/user-sort-options";
 import Filters from "@/components/filteration";
 import useSWR from "swr";
-import {POSTAPI,PUTAPI} from "../../../../utities/test"
+import {fetcher, POSTAPI, PUTAPI} from "../../../../utities/test"
 
-const fetcher = (url) => fetch(url).then((res) => res.json());
+//const fetcher = (url) => fetch(url).then((res) => res.json());
 
 export default function UserPage() {
   // States for managing users, pagination, and sorting
@@ -27,7 +27,7 @@ export default function UserPage() {
   const [storedUsers,setStoredUsers] = useState([])
 
   const { data, error, isLoading } = useSWR(
-    "https://10.1.114.43:3030/api/users",
+      `${process.env.NEXT_PUBLIC_api_url}/api/users`,
     fetcher
   );
 
@@ -201,7 +201,7 @@ export default function UserPage() {
         title="User Management"
         description="Maintain the privacy of your users."
         icon={Users}
-        iconColor="text-sky-700"
+        iconColor="text-sky-400"
       />
       {/* Filtering and sorting options */}
       <div className="  px-1  flex flex-col md:flex-row mt-8 mb-2 justify-center items-center ">

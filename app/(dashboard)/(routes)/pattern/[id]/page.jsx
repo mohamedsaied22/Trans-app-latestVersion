@@ -3,12 +3,12 @@
 import React, { useEffect, useState } from "react";
 import { Heading } from "@/components/heading";
 import Link from "next/link";
-import { Upload } from "lucide-react";
+import { Ship } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import CheckPointData from "../components/checkPoint-data";
 import { v4 as uuidv4 } from "uuid";
 import useSWR from "swr";
-import {POSTAPI, PUTAPI} from "@/utities/test";
+import {fetcher, POSTAPI, PUTAPI} from "@/utities/test";
 import {toast} from "react-toastify";
 // import UpdatePattern from "/components/Pattern-Update";
 
@@ -20,10 +20,10 @@ const PatternInfo = ({ params }) => {
 
   const id = params.id;
 
-  const fetcher = (url) => fetch(url).then((res) => res.json());
+ // const fetcher = (url) => fetch(url).then((res) => res.json());
 
   const { data, error, isLoading } = useSWR(
-      "https://10.1.114.43:3030/api/pattern/" + id,
+      `${process.env.NEXT_PUBLIC_api_url}/api/pattern/${id}`,
       fetcher
   );
 
@@ -169,11 +169,11 @@ const PatternInfo = ({ params }) => {
   return (
     <div>
       <Link href="/pattern">
-      <Heading
+        <Heading
           title="Pattern Operations"
           description="Navigating Your Pattern Fleet."
-          icon={Upload}
-          iconColor="text-sky-700"
+          icon={Ship}
+          iconColor="text-sky-400"
         />
       </Link>
 

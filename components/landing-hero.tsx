@@ -7,7 +7,7 @@ import { useAuth } from "@clerk/nextjs";
 import { Button } from "@/components/ui/button";
 
 export const LandingHero = () => {
-  const { isSignedIn } = useAuth();
+ /* const { isSignedIn } = useAuth();*/
 
   return (
     <div className="text-white font-bold py-36 text-center space-y-5">
@@ -31,9 +31,9 @@ export const LandingHero = () => {
       Get Started with SESCO Trans ERP Today.
       </div>
       <div>
-        <Link href={isSignedIn ? "/dashboard" : "/sign-in"}>
+        <Link href={"/dashboard"}>
           <Button variant="premium" className=" text-sky-100 md:text-lg p-4 md:p-6 rounded-full font-semibold shadow-xl from-sky-300 to-sky-900 ">
-          Sign In Now
+          Dashboard
           </Button>
         </Link>
       </div>

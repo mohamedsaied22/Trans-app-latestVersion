@@ -211,19 +211,21 @@ section .cont-container .conatat-form {
 /* Optional: Add a scrollbar for better UX */
 /* Customize scrollbar appearance for different browsers */
 /* WebKit (Safari and Chrome) */
-::-webkit-scrollbar-thumb {
-  background: #adadad; /* Background color of the thumb */
-  border-radius: 6px; /* Border radius of the thumb */
+::-webkit-scrollbar {
+  width: 10px;
 }
 
-/* Optionally, you can change the color when the thumb is hovered */
-::-webkit-scrollbar-thumb:hover {
-  background: #757575; /* Hover color of the thumb */
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #adadad;
+  border-radius: 6px;
 }
 
 /* Firefox */
 /* Style scrollbars on Firefox if needed */
-
 /* Please check for specific Firefox scrollbar styling as it varies */
 
 

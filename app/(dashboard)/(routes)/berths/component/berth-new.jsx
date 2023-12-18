@@ -20,8 +20,15 @@ const NewBerth = ({berths, onBerthCreated}) => {
     useEffect(() => {
         navigator.geolocation.getCurrentPosition(function (position) {
             setNewBerth({...newBerth, lat: position.coords.latitude, long: position.coords.longitude});
+        },(error) => {
+            console.log(error);
+        },{
+            enableHighAccuracy: true,
+            maximumAge: 10000,
+            timeout: 5000,
         });
     }, [isNewBerthModalOpen])
+
 
     useEffect(() => {
         const handleClickOutside = (event) => {
@@ -58,6 +65,7 @@ const NewBerth = ({berths, onBerthCreated}) => {
     };
 
     const handleInputChange = (e) => {
+
         const {name, value} = e.target;
         setNewBerth((prevState) => ({
             ...prevState,
@@ -87,7 +95,7 @@ const NewBerth = ({berths, onBerthCreated}) => {
             onBerthCreated(newBerth);
 
             // Show a success toast when a new vessel is created
-            toast.success("New Berth created successfully!", {
+            /*toast.success("New Berth created successfully!", {
                 position: toast.POSITION.TOP_RIGHT,
 
                 style: {
@@ -99,7 +107,7 @@ const NewBerth = ({berths, onBerthCreated}) => {
                     width: "98%",
                     fontSize: "bold",
                 },
-            });
+            });*/
         }
     };
 
@@ -166,6 +174,7 @@ const NewBerth = ({berths, onBerthCreated}) => {
                                 <input
                                     className="px-2 py-1 border border-gray-300 rounded-xl mb-2 shadow-md focus:shadow-xl focus:scale-105 transition-all duration-500 outline-none"
                                     type="number"
+                                    step="any"
                                     name="lat"
                                     value={newBerth.lat}
                                     onChange={handleInputChange}
@@ -181,6 +190,7 @@ const NewBerth = ({berths, onBerthCreated}) => {
                                     className="px-2 py-1 border border-gray-300 rounded-xl mb-2 shadow-md focus:shadow-xl focus:scale-105 transition-all duration-500 outline-none"
                                     type="number"
                                     name="long"
+                                    step="any"
                                     value={newBerth.long}
                                     onChange={handleInputChange}
                                     placeholder="Longitude"
@@ -209,7 +219,7 @@ const NewBerth = ({berths, onBerthCreated}) => {
 
                             <div className="flex justify-end">
                                 <button
-                                    className={`px-4 py-1 bg-sky-600 text-white rounded-lg mr-2 shadow-md ${
+                                    className={`px-4 py-1 bg-sky-400 text-white rounded-lg mr-2 shadow-md ${
                                         isButtonClicked
                                             ? "hover:bg-sky-500 hover:scale-95"
                                             : "hover:scale-95"
@@ -231,7 +241,7 @@ const NewBerth = ({berths, onBerthCreated}) => {
             )}
 
             <button
-                className={`lg:mr-16 px-2 py-1 bg-sky-700 text-white rounded-lg shadow-md ${
+                className={`lg:mr-16 px-2 py-1 bg-sky-400 text-white rounded-lg shadow-md ${
                     isButtonClicked
                         ? "hover:bg-sky-400"
                         : "hover:scale-[95%] hover:bg-sky-500"

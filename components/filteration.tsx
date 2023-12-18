@@ -28,7 +28,7 @@ const Filters = ({ onFilterChange }) => {
         />
         <div className="absolute right-0 pr-0 py-1">
           <button
-            className="px-4 py-3 bg-sky-700 text-white hover:bg-sky-500 rounded-r-3xl shadow-lg"
+            className="px-4 py-3 bg-sky-400 text-white hover:bg-sky-500 rounded-r-3xl shadow-lg"
             onClick={handleButtonClick}
           >
             <Search size={15} />

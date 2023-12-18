@@ -25,8 +25,7 @@ const CloseBooking = ({ booking, onBookingClosed, closedBookings = [] }) => {
     };
   }, [isCloseBookingModalOpen]);
 
-  const openModal = (e) => {
-    e.preventDefault(); // Prevent the default behavior of the button click
+  const openModal = () => {
     setIsCloseBookingModalOpen(true);
   };
 
@@ -42,28 +41,17 @@ const CloseBooking = ({ booking, onBookingClosed, closedBookings = [] }) => {
       closedAt: closedDate.toISOString(),
     };
 
-    onBookingClosed(closedBooking);
+    onBookingClosed(booking.bookingNumber);
     closeModal();
 
-    toast.success("Booking closed successfully!", {
-      position: toast.POSITION.TOP_RIGHT,
-      style: {
-        background: "#8acaff",
-        color: "#ffffff",
-        boxShadow:
-          "0 2px 4px rgba(0, 0, 0, 0.1), 0 4px 8px rgba(0, 0, 0, 0.1)",
-        borderRadius: "12px 0  12px 0",
-        width: "96%",
-        fontSize: "bold",
-      },
-    });
+
   };
 
   return (
     <div>
       {booking.status !== "Closed" && (
         <button
-          className={`px-1 py-1 ml-2 bg-red-900 text-white text-center text-sm rounded-lg shadow-lg hover:bg-red-700 hover:scale-[95%] transition`}
+          className={`px-1 py-1 ml-2 bg-red-400 text-white text-center text-sm rounded-lg shadow-lg hover:bg-red-600 hover:scale-[95%] transition`}
           onClick={openModal}
         >
           <div className="flex p-1 text">

@@ -13,7 +13,7 @@ import UpdateWarehouse from "./components/warehouse-update";
 import Filters from "@/components/filteration";
 import useSWR from "swr";
 
-import { POSTAPI, PUTAPI } from "../../../../utities/test";
+import {fetcher, POSTAPI, PUTAPI} from "../../../../utities/test";
 
 export default function WarehousePage() {
   // States to manage warehouse data, pagination, sorting, and filtering
@@ -25,7 +25,7 @@ export default function WarehousePage() {
 
   const [storedWarehouses, setStoredWarehouses] = useState([]);
 
-  const fetcher = (url) => fetch(url).then((res) => res.json());
+  //const fetcher = (url) => fetch(url).then((res) => res.json());
   // Load warehouses from localStorage on component mount
   // useEffect(() => {
   //   const storedWarehouses = JSON.parse(localStorage.getItem("warehouses")) || [];
@@ -34,7 +34,7 @@ export default function WarehousePage() {
   // }, []);
 
   const { data, error, isLoading } = useSWR(
-    "https://10.1.114.43:3030/api/warehouse",
+    `${process.env.NEXT_PUBLIC_api_url}/api/warehouse`,
     fetcher
   );
 
@@ -116,8 +116,8 @@ export default function WarehousePage() {
   const handleAPIAddWarehouse = async (newWarehouse) => {
     const warehouse = {
       ...newWarehouse,
-      lat: parseInt(newWarehouse.lat),
-      long: parseInt(newWarehouse.long),
+      lat: parseFloat(newWarehouse.lat),
+      long: parseFloat(newWarehouse.long),
     };
     const result = await POSTAPI("/api/warehouse", warehouse);
     console.log(result);
@@ -206,7 +206,7 @@ export default function WarehousePage() {
         title="Warehouse Logistics"
         description="Streamlining Warehouse Movement."
         icon={Combine}
-        iconColor="text-sky-700"
+        iconColor="text-sky-400"
       />
 
       {/* Filtering and sorting options */}

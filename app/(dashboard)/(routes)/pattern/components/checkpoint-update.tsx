@@ -150,13 +150,13 @@ const UpdateCheckPoint = ({ checkPoint, onUpdateCheckPoint }) => {
                   Location Type:
                 </span>
                 <select
-                    className="px-2 py-1 cursor-pointer text-gray-700 border border-gray-300 rounded-xl mb-2 shadow-md focus:shadow-xl focus:scale-105 transition-all duration-500 outline-none"
+                    className="px-2 py-1 cursor-pointer text-gray-500 border border-gray-300 rounded-xl mb-2 shadow-md focus:shadow-xl focus:scale-105 transition-all duration-500 outline-none"
                     name="locationType"
                     value={updatedCheckPoint.locationType}
                     onChange={handleInputChange}
                     style={{width: "235px"}} // Set a fixed width (adjust as needed)
                 >
-                  <option className="" value=""hidden>
+                  <option className="" value="">
                     Select Location Type
                   </option>
                   <option value="Berth">Berth</option>
@@ -170,13 +170,13 @@ const UpdateCheckPoint = ({ checkPoint, onUpdateCheckPoint }) => {
                   Role:
                 </span>
                 <select
-                    className="px-2 py-1 cursor-pointer text-gray-700 border border-gray-300 rounded-xl mb-2 shadow-md focus:shadow-xl focus:scale-105 transition-all duration-500 outline-none"
+                    className="px-2 py-1 cursor-pointer text-gray-500 border border-gray-300 rounded-xl mb-2 shadow-md focus:shadow-xl focus:scale-105 transition-all duration-500 outline-none"
                     name="role"
                     value={updatedCheckPoint.role}
                     onChange={handleInputChange}
                     style={{width: "235px"}} // Set a fixed width (adjust as needed)
                 >
-                  <option className="" value="" hidden>
+                  <option className="" value="">
                     Select Role
                   </option>
                   <option value="VESSEL_OFFICER">Vessel Officer</option>
@@ -190,13 +190,13 @@ const UpdateCheckPoint = ({ checkPoint, onUpdateCheckPoint }) => {
                   Repeat cycle:
                 </span>
                 <select
-                    className="px-2 py-1 cursor-pointer text-gray-700 border border-gray-300 rounded-xl mb-2 shadow-md focus:shadow-xl focus:scale-105 transition-all duration-500 outline-none"
+                    className="px-2 py-1 cursor-pointer text-gray-500 border border-gray-300 rounded-xl mb-2 shadow-md focus:shadow-xl focus:scale-105 transition-all duration-500 outline-none"
                     name="repeat"
                     value={updatedCheckPoint.repeat}
                     onChange={handleInputChange}
                     style={{width: "235px"}} // Set a fixed width (adjust as needed)
                 >
-                  <option className="" value="" hidden>
+                  <option className="" value="">
                     Select Repeat cycle
                   </option>
                   <option value="FIRST_TIME">First Time</option>
@@ -229,7 +229,7 @@ const UpdateCheckPoint = ({ checkPoint, onUpdateCheckPoint }) => {
       )}
 
       <button
-          className={`px-1 py-1 bg-sky-700 text-white rounded-lg shadow-xl mr-1 ${
+          className={`px-1 py-1 bg-sky-400 text-white rounded-lg shadow-xl mr-1 ${
               isButtonClicked
                   ? "hover:bg-sky-400"
                   : "hover:scale-[95%] hover:bg-sky-600"

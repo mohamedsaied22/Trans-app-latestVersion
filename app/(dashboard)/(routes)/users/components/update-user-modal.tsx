@@ -175,7 +175,7 @@ const UpdateUser = ({ user, onUpdateUser }) => {
 
             <div className="flex justify-end">
               <button
-                className={`px-4 py-1 bg-sky-600 text-white rounded-lg mr-2 shadow-md ${
+                className={`px-4 py-1 bg-sky-400 text-white rounded-lg mr-2 shadow-md ${
                   isButtonClicked
                     ? "hover:bg-sky-500 hover:scale-95"
                     : "hover:scale-95"
@@ -196,7 +196,7 @@ const UpdateUser = ({ user, onUpdateUser }) => {
       )}
 
       <button
-        className={`px-1 py-1 bg-sky-700 text-white rounded-lg shadow-xl  ${
+        className={`px-1 py-1 bg-sky-400 text-white rounded-lg shadow-xl  ${
           isButtonClicked
             ? "hover:bg-sky-600  "
             : "hover:scale-[95%] hover:bg-sky-500"

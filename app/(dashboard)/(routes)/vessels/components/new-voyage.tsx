@@ -184,7 +184,7 @@ const NewVoyage = ({ voyages,disable, onVoyageCreated }) => {
 
               <div className="flex justify-end">
                 <button
-                  className={`px-4 py-1 bg-sky-600 text-white rounded-lg mr-2 shadow-md ${
+                  className={`px-4 py-1 bg-sky-400 text-white rounded-lg mr-2 shadow-md ${
                     isButtonClicked
                       ? "hover-bg-sky-500 hover-scale-95"
                       : "hover-scale-95"
@@ -206,7 +206,7 @@ const NewVoyage = ({ voyages,disable, onVoyageCreated }) => {
       )}
 
       <button
-        className={`px-2 py-1 bg-sky-700 text-white rounded-lg shadow-md ${disable? 'cursor-not-allowed bg-gray-300':''} ${
+        className={`px-2 py-1 bg-sky-400 text-white rounded-lg shadow-md ${disable? 'cursor-not-allowed bg-gray-300':''} ${
           isButtonClicked
             ? "hover-bg-sky-400"
             : "hover-scale-[95%] hover-bg-sky-500"
