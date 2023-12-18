@@ -13,7 +13,7 @@ import NewBerth from "./component/berth-new";
 import UpdateBerth from "./component/berth-update";
 import useSWR from "swr";
 
-import { POSTAPI, PUTAPI } from "../../../../utities/test";
+import {fetcher, POSTAPI, PUTAPI} from "../../../../utities/test";
 
 export default function BerthPage() {
   const [filteredBerths, setFilteredBerths] = useState([]);
@@ -23,10 +23,10 @@ export default function BerthPage() {
   const [originalBerths, setOriginalBerths] = useState([]);
   const [storedBerths, setStoredBerths] = useState([]);
 
-  const fetcher = (url) => fetch(url).then((res) => res.json());
+  //const fetcher = (url) => fetch(url).then((res) => res.json());
 
   const { data, error, isLoading } = useSWR(
-    "https://10.1.114.43:3030/api/berth",
+    `${process.env.NEXT_PUBLIC_api_url}/api/berth`,
     fetcher
   );
 
@@ -128,8 +128,8 @@ export default function BerthPage() {
   const handleAPIAddBerth = async (newBerth) => {
     const berth = {
       ...newBerth,
-      lat: parseInt(newBerth.lat),
-      long: parseInt(newBerth.long),
+      lat: parseFloat(newBerth.lat),
+      long: parseFloat(newBerth.long),
     };
     const result = await POSTAPI("/api/berth", berth);
     console.log(result);
@@ -158,11 +158,9 @@ export default function BerthPage() {
   };
 
   const handleAPIUpdateBerth = async (updatedBerth) => {
-    console.log('clcikec')
     const { _id, code, ...berth } = updatedBerth;
     const wh = { ...berth, lat: +berth.lat, long: +berth.long };
     const result = await PUTAPI("/api/berth/" + _id, wh);
-    console.log(result);
     if (result.statusCode === 400) {
       if (result.message.includes("code")) {
         // toast
@@ -212,7 +210,7 @@ export default function BerthPage() {
         title="Berths Managements"
         description="Streamlining Berth Movement."
         icon={LandPlot}
-        iconColor="text-sky-700"
+        iconColor="text-sky-400"
       />
 
       <div className="px-1 flex flex-col md:flex-row mt-8 mb-2 justify-center items-center ">

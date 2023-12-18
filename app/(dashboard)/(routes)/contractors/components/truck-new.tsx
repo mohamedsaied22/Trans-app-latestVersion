@@ -226,7 +226,7 @@ transition={{ duration: .05, ease: 'easeInOut' }} // Custom transition
 
               <div className="flex justify-end">
                 <button
-                  className={`px-4 py-1 bg-sky-600 text-white rounded-lg mr-2 shadow-md ${
+                  className={`px-4 py-1 bg-sky-400 text-white rounded-lg mr-2 shadow-md ${
                     isButtonClicked
                       ? "hover:bg-sky-500 hover:scale-95"
                       : "hover:scale-95"
@@ -248,7 +248,7 @@ transition={{ duration: .05, ease: 'easeInOut' }} // Custom transition
       )}
 
       <button
-        className={`lg:mr-16 px-2 py-1 bg-sky-700 text-white rounded-lg shadow-md ${
+        className={`lg:mr-16 px-2 py-1 bg-sky-400 text-white rounded-lg shadow-md ${
           isButtonClicked
             ? "hover:bg-sky-400"
             : "hover:scale-[95%] hover:bg-sky-500"

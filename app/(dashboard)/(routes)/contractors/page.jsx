@@ -15,7 +15,7 @@ import Filters from "@/components/filteration";
 
 
 import useSWR from "swr";
-import { POSTAPI, PUTAPI } from "/utities/test";
+import {fetcher, POSTAPI, PUTAPI} from "/utities/test";
 
 
 export default function UserContractor() {
@@ -33,10 +33,10 @@ export default function UserContractor() {
 
 
 
-  const fetcher = (url) => fetch(url).then((res) => res.json());
+  //const fetcher = (url) => fetch(url).then((res) => res.json());
 
   const { data, error, isLoading } = useSWR(
-    "https://10.1.114.43:3030/api/contractor",
+    `${process.env.NEXT_PUBLIC_api_url}/api/contractor`,
     fetcher
   );
 
@@ -299,7 +299,7 @@ export default function UserContractor() {
         title="Contractor Management"
         description="Managing Your Contractor Network."
         icon={Truck}
-        iconColor="text-sky-700"
+        iconColor="text-sky-400"
       />
 
       <div className="px-1 flex flex-col md:flex-row mt-8 mb-2 justify-center items-center ">

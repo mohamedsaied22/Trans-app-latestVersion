@@ -1,8 +1,9 @@
+import {getSession} from "next-auth/react";
 
-// const getToken = async () => {
-//     const session = await getSession()
-//     return session?.user?.token
-// }
+const getToken = async () => {
+    const session = await getSession()
+    return session.accessToken
+}
 const http = async (url, options) => {
     options = {
         ...options,
@@ -10,7 +11,7 @@ const http = async (url, options) => {
             "Content-type": "application/json; charset=UTF-8",
             "Access-Control-Allow-Origin": "*",
             "Access-Control-Allow-Methods": "GET,POST,PUT",
-            // "Authorization": `Bearer ${await getToken()}`
+            "Authorization": `Bearer ${await getToken()}`
         }
     }
     return fetch(url, {method: options.method, headers: options.headers, body: options.body})
@@ -54,4 +55,4 @@ export async function PUTAPI(url, body) {
     return await res.json()
 }
 
-// export const fetcher = async (url: any) => fetch(url, {headers: {"Authorization": `Bearer ${await getToken()}`}}).then(res => res.json())
+ export const fetcher = async (url) => fetch(url, {headers: {"Authorization": `Bearer ${await getToken()}`}}).then(res => res.json())

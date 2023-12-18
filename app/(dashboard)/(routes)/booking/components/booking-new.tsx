@@ -1,4 +1,4 @@
-import { ShieldPlus } from "lucide-react";
+import { BadgePlus } from "lucide-react";
 import { useState, useEffect, useRef } from "react";
 
 import { ToastContainer, toast } from "react-toastify";
@@ -6,7 +6,7 @@ import "react-toastify/dist/ReactToastify.css";
 
 import { motion } from "framer-motion";
 import useSWR from "swr";
-import { POSTAPI } from "@/utities/test";
+import { POSTAPI, fetcher } from "@/utities/test";
 
 const NewBooking = ({ bookings, onBookingCreated }) => {
   const [isNewBookingModalOpen, setIsNewBookingModalOpen] = useState(false);
@@ -36,18 +36,18 @@ const NewBooking = ({ bookings, onBookingCreated }) => {
   const [vesselList, setVesselList] = useState([]);
   const [cargoList, setCargoList] = useState([]);
   const [_subCargoList, setSubCargoList] = useState([]);
-  const fetcher = (url) => fetch(url).then((res) => res.json());
+  //const fetcher = (url) => fetch(url).then((res) => res.json());
 
   const {
     data: openedVesselData,
     error,
     isLoading,
-  } = useSWR("https://10.1.114.43:3030/api/vessel/opened", fetcher);
+  } = useSWR(`${process.env.NEXT_PUBLIC_api_url}/api/vessel/opened`, fetcher);
   const {
     data: cargoData,
     error: cargoError,
     isLoading: cargoIsLoading,
-  } = useSWR("https://10.1.114.43:3030/api/cargo", fetcher);
+  } = useSWR(`${process.env.NEXT_PUBLIC_api_url}/api/cargo`, fetcher);
 
   useEffect(() => {
     setVesselList(openedVesselData || []);
@@ -138,10 +138,9 @@ const NewBooking = ({ bookings, onBookingCreated }) => {
     (vessel) => !isVesselBooked(vessel)
   );
 
-  // const handleAddBookingAPI = async (booking) => {
-  //   const result = await POSTAPI("/api/booking/", booking);
-  //   console.log(result);
-  // };
+  const handleAddBookingAPI = async (booking) => {
+    const result = await POSTAPI("/api/booking/", booking);
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault(); // Prevent form submission
@@ -218,11 +217,11 @@ const NewBooking = ({ bookings, onBookingCreated }) => {
             exit={{ scale: 0, y: "0%" }} // Exit to the left
             transition={{ duration: 0.05, ease: "easeInOut" }} // Custom transition
           >
-            <div className="flex justify-center mb-8 shadow-xl bg-gradient-to-b from-sky-400 via-sky-700 to-sky-900 px-6 py-3 rounded-xl">
-              <h2 className="text-xl text-white drop-shadow-lg font-semibold mr-6">
+            <div className="flex justify-center mb-8 shadow-xl bg-gradient-to-b from-sky-400 via-sky-700 to-sky-900 px-6 py-3 rounded-t-3xl">
+              <h2 className="text-xl text-white drop-shadow-lg font-semibold mr-6 ">
                 New Booking
               </h2>
-              <ShieldPlus className="shadow-xl text-white  font-semibold" />
+              <BadgePlus className="shadow-xl text-lg text-sky-300  font-semibold" />
             </div>
             <form onSubmit={handleSubmit} className="">
               <div className="flex justify-between items-center mb-4 shadow-md px-2 ">
@@ -230,7 +229,7 @@ const NewBooking = ({ bookings, onBookingCreated }) => {
                   Booking number:
                 </span>
                 <input
-                  className="px-2 py-1 border border-gray-300 rounded-xl mb-2 shadow-md focus:shadow-xl focus:scale-105 transition-all duration-500 outline-none"
+                  className="px-2 py-1 border border-gray-300 rounded-2xl mb-2 shadow-md focus:shadow-xl focus:scale-105 transition-all duration-500 outline-none"
                   type="text"
                   name="bookingNumber"
                   value={newBooking.bookingNumber}
@@ -244,7 +243,7 @@ const NewBooking = ({ bookings, onBookingCreated }) => {
                   Work Order:
                 </span>
                 <input
-                  className="px-2 py-1 border border-gray-300 rounded-xl mb-2 shadow-md focus:shadow-xl focus:scale-105 transition-all duration-500 outline-none"
+                  className="px-2 py-1 border border-gray-300 rounded-2xl mb-2 shadow-md focus:shadow-xl focus:scale-105 transition-all duration-500 outline-none"
                   type="text"
                   name="workOrderNumber"
                   value={newBooking.workOrderNumber}
@@ -259,7 +258,7 @@ const NewBooking = ({ bookings, onBookingCreated }) => {
                   Vessel:
                 </span>
                 <select
-                  className="px-2 py-1 cursor-pointer text-gray-600 border border-gray-300 rounded-xl mb-2 shadow-md focus:shadow-xl focus:scale-105 transition-all duration-500 outline-none"
+                  className="px-2 py-1 cursor-pointer text-gray-600 border border-gray-300 rounded-2xl mb-2 shadow-md focus:shadow-xl focus:scale-105 transition-all duration-500 outline-none"
                   name="vessel"
                   value={newBooking.vessel}
                   onChange={handleInputChange}
@@ -282,13 +281,13 @@ const NewBooking = ({ bookings, onBookingCreated }) => {
                   Cargo:
                 </span>
                 <select
-                  className="px-2 py-1 cursor-pointer text-gray-600 border border-gray-300 rounded-xl mb-2 shadow-md focus:shadow-xl focus:scale-105 transition-all duration-500 outline-none"
+                  className="px-2 py-1 cursor-pointer text-gray-600 border border-gray-300 rounded-2xl mb-2 shadow-md focus:shadow-xl focus:scale-105 transition-all duration-500 outline-none"
                   name="cargo"
                   value={newBooking.cargo}
                   onChange={handleInputChange}
                   style={{ width: "235px" }} // Set a fixed width (adjust as needed)
                 >
-                  <option value=""  hidden>
+                  <option value="" selected hidden>
                     Select Cargo
                   </option>
                   {cargoList.map((cargo) => (
@@ -305,7 +304,7 @@ const NewBooking = ({ bookings, onBookingCreated }) => {
                   Sub Cargo:
                 </span>
                 <select
-                  className="px-2 py-1 cursor-pointer text-gray-600 border border-gray-300 rounded-xl mb-2 shadow-md focus:shadow-xl focus:scale-105 transition-all duration-500 outline-none"
+                  className="px-2 py-1 cursor-pointer text-gray-600 border border-gray-300 rounded-2xl mb-2 shadow-md focus:shadow-xl focus:scale-105 transition-all duration-500 outline-none"
                   name="subCargo"
                   value={newBooking.subCargo}
                   onChange={handleInputChange}
@@ -328,7 +327,7 @@ const NewBooking = ({ bookings, onBookingCreated }) => {
                   IMEX:
                 </span>
                 <select
-                  className="px-2 py-1 cursor-pointer text-gray-500 border border-gray-300 rounded-xl mb-2 shadow-md focus:shadow-xl focus:scale-105 transition-all duration-500 outline-none"
+                  className="px-2 py-1 cursor-pointer text-gray-500 border border-gray-300 rounded-2xl mb-2 shadow-md focus:shadow-xl focus:scale-105 transition-all duration-500 outline-none"
                   name="imex"
                   value={newBooking.imex}
                   onChange={handleInputChange}
@@ -347,7 +346,7 @@ const NewBooking = ({ bookings, onBookingCreated }) => {
                   Trucks:
                 </span>
                 <input
-                  className="px-2 py-1 border border-gray-300 rounded-xl mb-2 shadow-md focus:shadow-xl focus:scale-105 transition-all duration-500 outline-none"
+                  className="px-2 py-1 border border-gray-300 rounded-2xl mb-2 shadow-md focus:shadow-xl focus:scale-105 transition-all duration-500 outline-none"
                   type="number"
                   name="numberOfTrucks"
                   value={newBooking.numberOfTrucks}
@@ -358,7 +357,7 @@ const NewBooking = ({ bookings, onBookingCreated }) => {
 
               <div className="flex justify-end">
                 <button
-                  className={`px-4 py-1 bg-sky-600 text-white rounded-lg mr-2 shadow-md ${
+                  className={`px-4 py-1 bg-sky-400 text-white rounded-lg mr-2 shadow-md ${
                     isButtonClicked
                       ? "hover:bg-sky-500 hover:scale-95"
                       : "hover:scale-95"
@@ -380,7 +379,7 @@ const NewBooking = ({ bookings, onBookingCreated }) => {
       )}
 
       <button
-        className={`lg:mr-16 px-2 py-1 bg-sky-700 text-white rounded-lg shadow-md ${
+        className={`lg:mr-16 px-2 py-1 bg-sky-400 text-white rounded-lg shadow-md ${
           isButtonClicked
             ? "hover:bg-sky-400"
             : "hover:scale-[95%] hover:bg-sky-500"

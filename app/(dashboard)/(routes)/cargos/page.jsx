@@ -5,7 +5,7 @@ import { Combine } from "lucide-react";
 import Link from "next/link";
 import { v4 as uuidv4 } from "uuid";
 import useSWR from "swr";
-import { POSTAPI, PUTAPI } from "../../../../utities/test";
+import {fetcher, POSTAPI, PUTAPI} from "../../../../utities/test";
 
 import { Card } from "@/components/ui/card";
 import { Heading } from "@/components/heading";
@@ -22,10 +22,10 @@ export default function CargoPage() {
   const [sortOption, setSortOption] = useState("");
   const [storedCargos, setStoredCargos] = useState([]);
 
-  const fetcher = (url) => fetch(url).then((res) => res.json());
+  //const fetcher = (url) => fetch(url).then((res) => res.json());
 
   const { data, error, isLoading } = useSWR(
-    "https://10.1.114.43:3030/api/cargo",
+    `${process.env.NEXT_PUBLIC_api_url}/api/cargo`,
     fetcher
   );
 
@@ -162,7 +162,7 @@ export default function CargoPage() {
         title="Cargo Logistics"
         description=" Streamlining Cargo Movement."
         icon={Combine}
-        iconColor="text-sky-700"
+        iconColor="text-sky-400"
       />
       <div className="px-1 flex flex-col md:flex-row mt-8 mb-2 justify-start items-center ">
         <div className="flex-1 mb-4 ">

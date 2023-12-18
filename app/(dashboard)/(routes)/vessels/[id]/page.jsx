@@ -14,7 +14,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 import useSWR from "swr";
- import { POSTAPI, PUTAPI } from "../../../../../utities/test";
+ import {fetcher, POSTAPI, PUTAPI} from "../../../../../utities/test";
 
 
 const VesselInfo = ({ params }) => {
@@ -28,10 +28,10 @@ const VesselInfo = ({ params }) => {
   const id = params.id;
 
 
-  const fetcher = (url) => fetch(url).then((res) => res.json());
+  //const fetcher = (url) => fetch(url).then((res) => res.json());
 
   const { data, error, isLoading } = useSWR(
-    "https://10.1.114.43:3030/api/vessel/"+id,
+    `${process.env.NEXT_PUBLIC_api_url}/api/vessel/${id}`,
     fetcher
   );
   useEffect(() => {
@@ -221,7 +221,7 @@ const VesselInfo = ({ params }) => {
           title="Vessel Operations"
           description="Navigating Your Vessel Fleet."
           icon={Ship}
-          iconColor="text-sky-700"
+          iconColor="text-sky-400"
         />
       </Link>
 

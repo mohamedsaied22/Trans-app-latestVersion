@@ -5,7 +5,7 @@ import { Heading } from "@/components/heading";
 import { Combine } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import useSWR from "swr";
-import { POSTAPI, PUTAPI } from "../../../../../utities/test";
+import {fetcher, POSTAPI, PUTAPI} from "../../../../../utities/test";
 import { v4 as uuidv4 } from "uuid";
 import SubCargoData from "../components/subcargo-data";
 import Link from "next/link";
@@ -18,10 +18,10 @@ const SubCargoPage = ({ params } ) => {
   const [subs, setSubs] = useState([]);
   const id = params.id;
 
-  const fetcher = (url) => fetch(url).then((res) => res.json());
+  //const fetcher = (url) => fetch(url).then((res) => res.json());
 
   const { data, error, isLoading } = useSWR(
-    "https://10.1.114.43:3030/api/cargo/"+id,
+    `${process.env.NEXT_PUBLIC_api_url}/api/cargo/${id}`,
     fetcher
   );
   useEffect(() => {

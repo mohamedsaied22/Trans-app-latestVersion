@@ -1,13 +1,28 @@
-import { authMiddleware } from "@clerk/nextjs";
- 
-// This example protects all routes including api/trpc routes
-// Please edit this to allow other routes to be public as needed.
-// See https://clerk.com/docs/references/nextjs/auth-middleware for more information about configuring your middleware
-export default authMiddleware({
-      publicRoutes: ["/"]
-});
- 
-export const config = {
-      matcher: ['/((?!.+\\.[\\w]+$|_next).*)', '/', '/(api|trpc)(.*)'],
-};
- 
+/**
+ * @Project : Internal Transportation Tracking
+ * @File : /middleware.ts
+ * @Author : Eng. Mustafa Elkhiat
+ * @Date : 10/1/2023
+ * @Time : 2:31 PM
+ */
+
+import {withAuth} from "next-auth/middleware"
+
+
+export default withAuth(
+    // `withAuth` augments your `Request` with the user's token.
+    function middleware(req) {
+    },
+    {
+        callbacks: {
+            authorized: ({token}) => {
+                return !!token
+            },
+        },
+        pages: {
+            signIn: '/login',
+        }
+    }
+)
+
+export const config = {matcher: ['/((?!auth).*)(.+)'],}

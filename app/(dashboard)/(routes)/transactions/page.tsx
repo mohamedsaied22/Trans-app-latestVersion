@@ -9,9 +9,6 @@
 import {QrScanner} from "@yudiel/react-qr-scanner";
 import {POSTAPI} from "@/utities/test";
 import {useEffect, useState} from "react";
-import {Heading} from "@/components/heading";
-import { ArrowLeftRight } from "lucide-react";
-
 
 
 export default function TransactionPage() {
@@ -19,12 +16,19 @@ export default function TransactionPage() {
     const [long, setLong] = useState<number>(0)
     const [qrCodeValue, setQrCodeValue] = useState<string>(null)
     const parsedQrCode = JSON.parse(qrCodeValue)
+    const [message, setMessage] = useState("")
 
 
     useEffect(() => {
         navigator.geolocation.getCurrentPosition(function (position) {
             setLat(position.coords.latitude);
             setLong(position.coords.longitude);
+        }, (error) => {
+            console.log(error);
+        }, {
+            enableHighAccuracy: true,
+            maximumAge: 10000,
+            timeout: 5000,
         });
     }, [])
 
@@ -34,32 +38,37 @@ export default function TransactionPage() {
                 lat, long, truckDriverId: parsedQrCode.truckDriverId
             }
             console.log(`Scanned : ${qrCodeValue}`, body)
+            setMessage('')
+            addCheckPointToTrip(body).then((result) => {
+                console.log(result.message)
+                setMessage(result.message)
+            })
         }
     }, [qrCodeValue]);
 
 
     const addCheckPointToTrip = async (body: any) => {
-        const result = await POSTAPI(`/api/booking/${parsedQrCode.bookingNumber}/tripCheckPoint`, body)
+        return await POSTAPI(`/api/booking/${parsedQrCode.bookingNumber}/tripCheckPoint`, body)
     }
 
 
     return (
-                 <div className="">
-            <Heading
-                title="Transactions Operations"
-                description="Navigating Your Pattern Fleet."
-                icon={ArrowLeftRight}
-                iconColor="text-sky-700"
-            />
-            {qrCodeValue && <div className="my-4">{qrCodeValue} </div>}
-            {lat && long && <div className="my-4">fdsfs</div>}
-            <div className="w-72 h-72 mx-auto">
+        <div>
+            {/*{qrCodeValue && <div className="my-4">{qrCodeValue}</div>}
+            {lat && long && <div className="my-4">{lat} , {long}</div>}*/}
+            {/* {message.error && <div className="my-4 text-red-400">{message.error.message}</div>}*/}
+            {message && <div className="my-4 text-green-400">{message}</div>}
+
+            {lat && long && !qrCodeValue && <div className="w-72 h-72 mx-auto">
                 <QrScanner
                     onDecode={(result) => setQrCodeValue(result)}
                     onError={(error) => console.log(error?.message)}
                 />
 
             </div>
+            }
+            {!lat && !long && <h1> Location is loading... </h1>}
+            {!message && qrCodeValue && <div>...Loading</div>}
         </div>
     );
 }

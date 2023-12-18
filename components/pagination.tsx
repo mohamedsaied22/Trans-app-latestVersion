@@ -20,7 +20,7 @@ const Pagination = ({
             "px-4 py-2 rounded-md text-sm font-medium mr-2",
             currentPage === 1
               ? "bg-gray-300 cursor-not-allowed"
-              : "bg-sky-600 hover:bg-sky-500 text-white"
+              : "bg-sky-400 hover:bg-sky-500 text-white"
           )}
           disabled={currentPage === 1}
           onClick={goToPreviousPage}
@@ -32,7 +32,7 @@ const Pagination = ({
             "px-4 py-2 rounded-md text-sm font-medium",
             currentPage === totalPages
               ? "bg-gray-300 cursor-not-allowed"
-              : "bg-sky-600 hover:bg-sky-500 text-white hover:scale-95"
+              : "bg-sky-400 hover:bg-sky-500 text-white hover:scale-95"
           )}
           disabled={currentPage === totalPages}
           onClick={goToNextPage}
@@ -42,11 +42,11 @@ const Pagination = ({
       
         <p className="text-center text-gray-600 mb-2 mr-2 ml-2 mt-8 ">
            
-          <span className="bg-sky-700 text-white p-1 shadow-md rounded-lg ml-2 mr-2 px-2">
+          <span className="bg-sky-400 text-white p-1 shadow-md rounded-lg ml-2 mr-2 px-2">
             {currentPage}</span>
            of
            
-           <span className="bg-sky-700 text-white p-1 shadow-md rounded-lg ml-2 mr-2 px-2">
+           <span className="bg-sky-400 text-white p-1 shadow-md rounded-lg ml-2 mr-2 px-2">
             {totalPages}
             </span>
         </p>

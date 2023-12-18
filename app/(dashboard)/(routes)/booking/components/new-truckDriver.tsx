@@ -1,11 +1,11 @@
 import React, { useState, useEffect, useRef } from "react";
-import { ShieldPlus } from "lucide-react";
+import { BadgePlus } from "lucide-react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { motion } from "framer-motion";
 
 import useSWR ,{useSWRConfig} from "swr";
-import { POSTAPI } from "@/utities/test";
+import { POSTAPI, fetcher } from "@/utities/test";
 
 const NewTruck = ({ trucks, onTruckCreated }) => {
   const { mutate } = useSWRConfig()
@@ -37,32 +37,29 @@ const NewTruck = ({ trucks, onTruckCreated }) => {
     truckList.find((truck) => truck.number === truckNumber);
 
   const getDriver = (nationalID) => {
-    console.log(nationalID,driverList);
     return driverList.find((driver) => driver.nationalID === nationalID);
   };
 
-  const fetcher = (url) => fetch(url).then((res) => res.json());
+  //const fetcher = (url) => fetch(url).then((res) => res.json());
 
   const {
     data: contractorData,
     error,
     isLoading,
-  } = useSWR("https://10.1.114.43:3030/api/contractor", fetcher);
+  } = useSWR(`${process.env.NEXT_PUBLIC_api_url}/api/contractor`, fetcher);
   const {
     data: cargoData,
     error: cargoError,
     isLoading: cargoIsLoading,
-  } = useSWR("https://10.1.114.43:3030/api/cargo", fetcher);
+  } = useSWR(`${process.env.NEXT_PUBLIC_api_url}/api/cargo`, fetcher);
 
   useEffect(() => {
-    console.log(contractorData);
     if (contractorData) {
       setContractorList(contractorData || []);
     }
   }, [contractorData]);
 
   useEffect(() => {
-    console.log(newTruckDriver.contractor);
     if (newTruckDriver.contractor) {
       const contractor = getContractor(newTruckDriver.contractor);
       setDriverList(contractor.driverList.filter(driver => driver.driverStatus === 'AVAILABLE'));
@@ -148,20 +145,17 @@ const NewTruck = ({ trucks, onTruckCreated }) => {
       newTruckDriver.contractor
     );
 
-    console.log(getDriver(newTruckDriver.driver));
     const truckDriver = {
       contractor: contractor,
       truck: getTruck(newTruckDriver.truck),
       driver: getDriver(newTruckDriver.driver),
     };
 
-    console.log(truckDriver);
     closeModal();
     onTruckCreated(truckDriver);
 
-    const data = await mutate('https://10.1.114.43:3030/api/contractor')
-    console.log(data)
-    toast.success("New truck driver created successfully!", {
+    //const data = await mutate(`${process.env.NEXT_PUBLIC_api_url}/api/contractor`)
+    /*toast.success("New truck driver created successfully!", {
       position: toast.POSITION.TOP_RIGHT,
       style: {
         background: "#6acaff", // Background color
@@ -171,7 +165,7 @@ const NewTruck = ({ trucks, onTruckCreated }) => {
         width: "96%",
         fontSize: "bold",
       },
-    });
+    });*/
   };
 
   useEffect(() => {
@@ -186,7 +180,7 @@ const NewTruck = ({ trucks, onTruckCreated }) => {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             className="fixed  z-50 inset-0 flex items-center justify-center bg-gray-700 bg-opacity-70"
-            >
+          >
             {" "}
             <motion.div
               id="modal"
@@ -197,11 +191,11 @@ const NewTruck = ({ trucks, onTruckCreated }) => {
               exit={{ scale: 0, y: "0%" }} // Exit to the left
               transition={{ duration: 0.05, ease: "easeInOut" }} // Custom transition
             >
-            <div className="flex justify-center mb-8 shadow-xl bg-gradient-to-b from-sky-400 via-sky-700 to-sky-900 px-6 py-3 rounded-xl">
-              <h2 className="text-xl text-white drop-shadow-lg font-semibold mr-6">
+              <div className="flex justify-center mb-8 shadow-xl bg-gradient-to-b from-sky-400 via-sky-700 to-sky-900 px-6 py-3 rounded-t-3xl">
+                <h2 className="text-xl text-white drop-shadow-lg font-semibold mr-6 ">
                   New Truck Driver
                 </h2>
-                <ShieldPlus className="shadow-xl text-white  font-semibold" />
+                <BadgePlus className="text-sky-400" />
               </div>
               <form onSubmit={handleSubmit}>
                 <div className="flex justify-between items-center mb-4 shadow-md px-2">
@@ -334,7 +328,7 @@ const NewTruck = ({ trucks, onTruckCreated }) => {
                   <button
                     className={`px-4 py-1 ${
                       checked
-                        ? "bg-sky-700 text-white transition-all duration-300"
+                        ? "bg-sky-400 transition-all duration-300"
                         : "bg-gray-600"
                     } text-black rounded-lg mr-2`}
                     type="submit"
@@ -358,7 +352,7 @@ const NewTruck = ({ trucks, onTruckCreated }) => {
           </motion.div>
         )}
         <button
-          className={`lg:mr-16 px-2 py-1 bg-sky-700 text-white rounded-lg shadow-md ${
+          className={`lg:mr-16 px-2 py-1 bg-sky-400 text-white rounded-lg shadow-md ${
             isButtonClicked
               ? "hover:bg-sky-400"
               : "hover:scale-[95%] hover:bg-sky-500"

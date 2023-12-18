@@ -13,7 +13,7 @@ import DeleteVessel from "./components/vessel-delete-modal";
 import Filters from "@/components/filteration";
 import SortOptions from "./components/vessel-sort";
 import useSWR from "swr";
-import { POSTAPI, PUTAPI } from "../../../../utities/test";
+import {fetcher, POSTAPI, PUTAPI} from "../../../../utities/test";
   
 export default function VesselsPage() {
   const [filteredVessels, setFilteredVessels] = useState([]);
@@ -41,10 +41,10 @@ export default function VesselsPage() {
   // }, []);
 
 
-  const fetcher = (url) => fetch(url).then((res) => res.json());
+  //const fetcher = (url) => fetch(url).then((res) => res.json());
 
   const { data, error, isLoading } = useSWR(
-    "https://10.1.114.43:3030/api/vessel",
+      `${process.env.NEXT_PUBLIC_api_url}/api/vessel`,
     fetcher
   );
 
